@@ -136,6 +136,8 @@ def main() -> None:
         raise ValueError("GitHub Actions must use immutable full commit SHAs")
     if "scripts.validate_repository_hygiene" not in workflow:
         raise ValueError("CI must enforce the repository hygiene gate")
+    if "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}" not in workflow:
+        raise ValueError("Gitleaks PR scanning must receive the read-only workflow token")
 
 
 if __name__ == "__main__":
