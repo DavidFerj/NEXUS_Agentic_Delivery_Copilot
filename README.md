@@ -107,3 +107,8 @@ remain controlled promotion steps.
 `main` is the protected release branch, `develop` is the integration branch, and
 short-lived branches carry one traceable change. Production promotion always requires a
 separate workflow and explicit human approval.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). Contributions are accepted under the
+same license unless explicitly agreed otherwise.

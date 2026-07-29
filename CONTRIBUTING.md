@@ -1,5 +1,11 @@
 # Contributing
 
+## Contribution license
+
+By submitting a contribution, you agree that it is your original work or that you have
+the right to submit it, and that it is provided under the repository's
+[Apache License 2.0](LICENSE).
+
 ## Workflow
 
 1. Start from the current local `develop` state unless the approved task specifies a

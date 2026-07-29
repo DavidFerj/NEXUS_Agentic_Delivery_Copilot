@@ -1,10 +1,13 @@
 # Public repository hardening validation
 
 Evidence date: 2026-07-29
-Branch: `dalf/security/public-repository-hardening`
+Validated remote commit: `100918c654d7d15fdc8bee29e7db444770cfc975`
+License candidate branch: `dalf/docs/apache-license`
 
 Validation is intentionally recorded only after each command or remote control has
-executed. The publication gate remains closed until remote CI and licensing complete.
+executed. The technical publication gate is open: remote CI is green and the product
+owner selected Apache-2.0. Visibility remains private until the licensed commit passes
+the same gate.
 
 ## Local results
 
@@ -27,26 +30,30 @@ executed. The publication gate remains closed until remote CI and licensing comp
 Firebase CLI emitted a Node deprecation warning for its own App Hosting subprocess
 implementation; the emulator and application check completed successfully.
 
-## CI-dependent checks
+## Remote results
 
-Docker is not installed on the local host. The following remain blocking until the first
-private GitHub Actions run:
+| Area                     | Evidence                                                                                                                                           | Result                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `main` CI                | [GitHub Actions run 30493814946](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30493814946)                             | Passed: `api`, `web`, `firebase`, `containers`, and `security`      |
+| `develop` CI             | [GitHub Actions run 30493821572](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30493821572)                             | Passed: `api`, `web`, `firebase`, `containers`, and `security`      |
+| Containers               | Linux Compose rendering, control-plane/web builds, and Trivy image scans                                                                           | Passed with no unwaived critical/high finding                       |
+| PostgreSQL               | Migration plus live RLS, tenant-FK, and audit-immutability integration tests                                                                       | Passed in the `api` job                                             |
+| Repository security      | Gitleaks history scan, Trivy filesystem scan, JavaScript/Python audits                                                                             | Passed in the `security` job                                        |
+| GitHub dependency safety | Vulnerability-alert and automated-security-fix API verification                                                                                    | Enabled                                                             |
+| Private-plan controls    | Branch-protection API returned HTTP 403; private-vulnerability-reporting API returned HTTP 404 while the repository remains private on GitHub Free | Deferred until public visibility, where GitHub makes them available |
 
-- Compose rendering on Linux;
-- both container builds and Trivy image scans;
-- live PostgreSQL migration, RLS, cross-tenant FK, and audit immutability integration;
-- Gitleaks full-history scan and Trivy filesystem scan;
-- GitHub security and branch-control verification.
+Docker remains unavailable on the local Windows host; the required Docker checks were
+therefore executed and passed on GitHub-hosted Linux runners.
 
 ## Acceptance status
 
-| Criterion  | Status                                                                  |
-| ---------- | ----------------------------------------------------------------------- |
-| AC-PRH-001 | Pending reconstructed remote history                                    |
-| AC-PRH-002 | Partially completed; local scan passed, Gitleaks pending                |
-| AC-PRH-003 | Partially completed; ecosystem audits passed, Trivy pending             |
-| AC-PRH-004 | Partially completed; local gates passed, Docker/CI pending              |
-| AC-PRH-005 | Partially completed; static/unit checks passed, live PostgreSQL pending |
-| AC-PRH-006 | Completed                                                               |
-| AC-PRH-007 | Partially completed; files added, remote settings pending               |
-| AC-PRH-008 | Pending remote CI and license                                           |
+| Criterion  | Status                                                                                |
+| ---------- | ------------------------------------------------------------------------------------- |
+| AC-PRH-001 | Completed                                                                             |
+| AC-PRH-002 | Completed                                                                             |
+| AC-PRH-003 | Completed                                                                             |
+| AC-PRH-004 | Completed                                                                             |
+| AC-PRH-005 | Completed                                                                             |
+| AC-PRH-006 | Completed                                                                             |
+| AC-PRH-007 | Partially completed; public-only GitHub controls remain                               |
+| AC-PRH-008 | Gate satisfied; Apache-2.0 selected and licensed commit awaiting final CI/publication |

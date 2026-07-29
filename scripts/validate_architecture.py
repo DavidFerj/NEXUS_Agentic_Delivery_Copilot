@@ -2,6 +2,7 @@
 
 import json
 import re
+import tomllib
 from pathlib import Path
 
 from yaml import safe_load
@@ -9,6 +10,8 @@ from yaml import safe_load
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_PATHS = (
+    "LICENSE",
+    "NOTICE",
     "frontend/package.json",
     "frontend/apphosting.yaml",
     "turbo.json",
@@ -42,6 +45,28 @@ def main() -> None:
     legacy = [path for path in FORBIDDEN_LEGACY_DIRECTORIES if (ROOT / path).exists()]
     if legacy:
         raise ValueError(f"legacy root directories remain: {', '.join(legacy)}")
+
+    license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
+    if "Apache License" not in license_text or "Version 2.0, January 2004" not in license_text:
+        raise ValueError("repository license must contain the canonical Apache-2.0 terms")
+
+    package_manifests = (
+        "package.json",
+        "frontend/package.json",
+        "gcp/firebase/package.json",
+        "gcp/packages/contracts/package.json",
+    )
+    if any(
+        json.loads((ROOT / path).read_text(encoding="utf-8")).get("license") != "Apache-2.0"
+        for path in package_manifests
+    ):
+        raise ValueError("JavaScript package metadata must declare Apache-2.0")
+
+    control_plane_metadata = tomllib.loads(
+        (ROOT / "gcp/services/control-plane/pyproject.toml").read_text(encoding="utf-8")
+    )
+    if control_plane_metadata["project"].get("license") != "Apache-2.0":
+        raise ValueError("Python package metadata must declare Apache-2.0")
 
     firebase_config = json.loads((ROOT / "firebase.json").read_text(encoding="utf-8"))
     firestore = firebase_config["firestore"]
