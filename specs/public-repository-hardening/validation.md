@@ -1,13 +1,12 @@
 # Public repository hardening validation
 
 Evidence date: 2026-07-29
-Validated remote commit: `100918c654d7d15fdc8bee29e7db444770cfc975`
-License candidate branch: `dalf/docs/apache-license`
+Validated remote commit: `cabc7963f0df42ce7a9ba7b1fd73d3d0c6dc75eb`
+Repository visibility: public
 
 Validation is intentionally recorded only after each command or remote control has
-executed. The technical publication gate is open: remote CI is green and the product
-owner selected Apache-2.0. Visibility remains private until the licensed commit passes
-the same gate.
+executed. The publication gate is complete: the licensed commit passed local and remote
+validation before visibility changed to public.
 
 ## Local results
 
@@ -32,28 +31,35 @@ implementation; the emulator and application check completed successfully.
 
 ## Remote results
 
-| Area                     | Evidence                                                                                                                                           | Result                                                              |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `main` CI                | [GitHub Actions run 30493814946](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30493814946)                             | Passed: `api`, `web`, `firebase`, `containers`, and `security`      |
-| `develop` CI             | [GitHub Actions run 30493821572](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30493821572)                             | Passed: `api`, `web`, `firebase`, `containers`, and `security`      |
-| Containers               | Linux Compose rendering, control-plane/web builds, and Trivy image scans                                                                           | Passed with no unwaived critical/high finding                       |
-| PostgreSQL               | Migration plus live RLS, tenant-FK, and audit-immutability integration tests                                                                       | Passed in the `api` job                                             |
-| Repository security      | Gitleaks history scan, Trivy filesystem scan, JavaScript/Python audits                                                                             | Passed in the `security` job                                        |
-| GitHub dependency safety | Vulnerability-alert and automated-security-fix API verification                                                                                    | Enabled                                                             |
-| Private-plan controls    | Branch-protection API returned HTTP 403; private-vulnerability-reporting API returned HTTP 404 while the repository remains private on GitHub Free | Deferred until public visibility, where GitHub makes them available |
+| Area                     | Evidence                                                                                                                     | Result                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `main` CI                | [GitHub Actions run 30495188721](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30495188721)       | Passed on licensed publication commit: all five jobs                   |
+| `develop` CI             | [GitHub Actions run 30495193244](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30495193244)       | Passed on licensed publication commit: all five jobs                   |
+| Containers               | Linux Compose rendering, control-plane/web builds, and Trivy image scans                                                     | Passed with no unwaived critical/high finding                          |
+| PostgreSQL               | Migration plus live RLS, tenant-FK, and audit-immutability integration tests                                                 | Passed in the `api` job                                                |
+| Repository security      | Gitleaks history scan, Trivy filesystem scan, JavaScript/Python audits                                                       | Passed in the `security` job                                           |
+| GitHub dependency safety | Vulnerability alerts, automated security fixes, secret scanning, and push protection                                         | Enabled                                                                |
+| Code scanning            | [CodeQL Default Setup run 30495602789](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30495602789) | Passed; zero open code-scanning alerts                                 |
+| Security alerts          | GitHub API inspection after publication                                                                                      | Zero code-scanning, secret-scanning, and Dependabot alerts             |
+| Vulnerability reporting  | GitHub private-vulnerability-reporting API                                                                                   | Enabled                                                                |
+| Branch governance        | GitHub branch-protection API for `main` and `develop`                                                                        | PR, CODEOWNERS review, five strict CI checks, linear history, no force |
 
 Docker remains unavailable on the local Windows host; the required Docker checks were
 therefore executed and passed on GitHub-hosted Linux runners.
 
+GitHub Free did not enable non-provider secret patterns or validity checks. Provider
+pattern scanning, push protection, Gitleaks, filesystem scanning, dependency audits, and
+CodeQL remain active.
+
 ## Acceptance status
 
-| Criterion  | Status                                                                                |
-| ---------- | ------------------------------------------------------------------------------------- |
-| AC-PRH-001 | Completed                                                                             |
-| AC-PRH-002 | Completed                                                                             |
-| AC-PRH-003 | Completed                                                                             |
-| AC-PRH-004 | Completed                                                                             |
-| AC-PRH-005 | Completed                                                                             |
-| AC-PRH-006 | Completed                                                                             |
-| AC-PRH-007 | Partially completed; public-only GitHub controls remain                               |
-| AC-PRH-008 | Gate satisfied; Apache-2.0 selected and licensed commit awaiting final CI/publication |
+| Criterion  | Status    |
+| ---------- | --------- |
+| AC-PRH-001 | Completed |
+| AC-PRH-002 | Completed |
+| AC-PRH-003 | Completed |
+| AC-PRH-004 | Completed |
+| AC-PRH-005 | Completed |
+| AC-PRH-006 | Completed |
+| AC-PRH-007 | Completed |
+| AC-PRH-008 | Completed |
