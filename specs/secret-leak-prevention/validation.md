@@ -1,6 +1,7 @@
 # Secret leak prevention validation
 
 Evidence date: 2026-07-29
+Validated implementation commit: `dad204d7c07a5fcd97507348e21deafa40812297`
 
 Validation evidence is recorded only after the corresponding command or remote control
 has completed.
@@ -35,22 +36,45 @@ and Trivy image scans remain required in GitHub-hosted CI.
 
 | Control                   | Result                                                                |
 | ------------------------- | --------------------------------------------------------------------- |
-| Allowed GitHub Actions    | GitHub-owned plus four explicit third-party repositories              |
+| Allowed GitHub Actions    | GitHub-owned plus five explicit third-party repositories              |
 | Third-party trust         | Unverified Marketplace actions denied                                 |
 | Action reference policy   | Full-length commit SHA required by repository setting                 |
 | Default workflow token    | Read-only; pull-request approval disabled                             |
 | Existing repository gates | Required PR, CODEOWNERS, strict CI, Gitleaks, CodeQL, push protection |
-| Pending branch validation | Draft PR CI, Gitleaks history scan, Firebase, containers, and CodeQL  |
+
+The initial CI run correctly blocked Trivy because its SHA-pinned
+`aquasecurity/setup-trivy` dependency was missing from the new allowlist. Only that
+transitive repository was added. The next security run reached Gitleaks, whose current
+action requires the automatic workflow token for pull-request scans. The token is now
+provided only to the SHA-pinned Gitleaks step and retains repository-wide read-only
+permissions.
+
+## Remote validation
+
+| Area                 | Evidence                                                                                                | Result                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Required CI          | [Run 30500600692](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30500600692) | Passed: API, web, Firebase, containers, and security        |
+| CodeQL               | [Run 30500598729](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/actions/runs/30500598729) | Passed: Python, JavaScript/TypeScript, and GitHub Actions   |
+| Secret history       | Gitleaks in the required security job                                                                   | Passed: no detected secret                                  |
+| Containers           | Linux builds and Trivy scans in the required containers job                                             | Passed: no unwaived critical/high finding                   |
+| Firebase             | Java 21 emulator Rules and App Hosting checks                                                           | Passed                                                      |
+| Security alerts      | GitHub code-scanning, secret-scanning, and Dependabot APIs                                              | Zero open alerts                                            |
+| Pull request         | [Draft PR 1](https://github.com/DavidFerj/NEXUS_Agentic_Delivery_Copilot/pull/1)                        | Protected `develop` target; all current checks successful   |
+| Actions restrictions | Repository API                                                                                          | Selected providers only, full SHA required, token read-only |
+
+GitHub-hosted runners report upstream Node 20 action metadata deprecation warnings while
+forcing those actions to Node 24. All affected actions remain SHA-pinned and passed; no
+insecure compatibility override was enabled.
 
 ## Acceptance status
 
-| Criterion  | Status              |
-| ---------- | ------------------- |
-| AC-SLP-001 | Completed           |
-| AC-SLP-002 | Completed           |
-| AC-SLP-003 | Completed           |
-| AC-SLP-004 | Completed           |
-| AC-SLP-005 | Completed           |
-| AC-SLP-006 | Partially completed |
-| AC-SLP-007 | Partially completed |
-| AC-SLP-008 | Completed           |
+| Criterion  | Status    |
+| ---------- | --------- |
+| AC-SLP-001 | Completed |
+| AC-SLP-002 | Completed |
+| AC-SLP-003 | Completed |
+| AC-SLP-004 | Completed |
+| AC-SLP-005 | Completed |
+| AC-SLP-006 | Completed |
+| AC-SLP-007 | Completed |
+| AC-SLP-008 | Completed |
