@@ -15,6 +15,9 @@ overrides:
 allowBuilds:
   "@firebase/util": true
   protobufjs: true
+  # Optional firebase-tools acceleration. Native compilation is unnecessary for
+  # the emulator workflows and would widen the install-time trust boundary.
+  re2: false
   sharp: true
   unrs-resolver: true
 

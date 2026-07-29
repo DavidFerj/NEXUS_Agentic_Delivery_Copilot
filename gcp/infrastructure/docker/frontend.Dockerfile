@@ -14,19 +14,16 @@ FROM dependencies AS builder
 COPY frontend frontend
 RUN pnpm --filter @nexus/web build
 
-FROM node:24.14.0-bookworm-slim AS runner
+FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:af85d11ce7ef10172855a6e3649e3e8125b1b9e3ca41849ec2918036f05cb212 AS runner
 ENV NODE_ENV=production
 
-RUN groupadd --system nexus \
-    && useradd --system --gid nexus --create-home nexus
-
 WORKDIR /app
-COPY --from=builder --chown=nexus:nexus /workspace/frontend/.next/standalone ./
-COPY --from=builder --chown=nexus:nexus /workspace/frontend/.next/static ./frontend/.next/static
+COPY --from=builder --chown=nonroot:nonroot /workspace/frontend/.next/standalone ./
+COPY --from=builder --chown=nonroot:nonroot /workspace/frontend/.next/static ./frontend/.next/static
 
-USER nexus
+USER nonroot
 EXPOSE 3000
 ENV PORT=3000 HOSTNAME=0.0.0.0
 
-CMD ["node", "frontend/server.js"]
+CMD ["frontend/server.js"]
 
