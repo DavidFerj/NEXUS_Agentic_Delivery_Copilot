@@ -1,0 +1,48 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.coverage
+.coverage.*
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+htmlcov/
+
+# Node.js / Next.js
+node_modules/
+.next/
+next-env.d.ts
+coverage/
+dist/
+out/
+*.tsbuildinfo
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Runtime artifacts
+.artifacts/
+.local/
+.codex/
+logs/
+
+# Firebase local state
+.firebase/
+.firebaserc
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+apphosting.local.yaml
+gcp/firebase/.emulator-data/
+

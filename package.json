@@ -1,0 +1,29 @@
+{
+  "name": "nexus-agentic-delivery-copilot",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @nexus/web dev",
+    "lint": "pnpm --filter @nexus/web lint",
+    "typecheck": "pnpm --filter @nexus/web typecheck && pnpm --filter @nexus/firebase typecheck",
+    "test": "pnpm --filter @nexus/web test",
+    "test:coverage": "pnpm --filter @nexus/web test:coverage",
+    "test:apphosting": "firebase emulators:exec --config firebase.json --only apphosting --project nexus-local \"node scripts/check_apphosting.mjs\"",
+    "test:firebase": "firebase emulators:exec --config firebase.json --only firestore --project nexus-local \"pnpm --filter @nexus/firebase test\"",
+    "build": "pnpm --filter @nexus/web build",
+    "emulators:firebase": "firebase emulators:start --config firebase.json --project nexus-local",
+    "audit:dependencies": "pnpm audit --audit-level high",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "firebase-tools": "15.24.0",
+    "prettier": "3.6.2",
+    "turbo": "2.10.7"
+  }
+}

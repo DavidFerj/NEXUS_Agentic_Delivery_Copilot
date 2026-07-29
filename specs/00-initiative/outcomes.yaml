@@ -1,0 +1,21 @@
+version: 1
+outcomes:
+  - id: OUT-001
+    statement: Reduce lead time from approved product intent to a verifiable staging release.
+    measures:
+      - idea_to_mvp_elapsed_time
+      - lead_time_to_staging
+      - human_time_per_stage
+  - id: OUT-002
+    statement: Preserve complete traceability from outcome through deployment.
+    measures:
+      - stories_with_complete_traceability_ratio
+      - audited_tool_calls_ratio
+      - audited_policy_decisions_ratio
+  - id: OUT-003
+    statement: Increase delivery quality without expanding unsafe autonomy.
+    measures:
+      - first_pass_success_ratio
+      - accepted_pull_request_ratio
+      - unwaived_critical_or_high_findings
+      - human_escalation_ratio

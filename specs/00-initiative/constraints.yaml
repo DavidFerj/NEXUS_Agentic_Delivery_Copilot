@@ -1,0 +1,14 @@
+version: 1
+constraints:
+  - id: CON-001
+    rule: Production promotion requires explicit human approval.
+  - id: CON-002
+    rule: Tenant code execution must be isolated from the control plane.
+  - id: CON-003
+    rule: Production credentials are unavailable to coding agents.
+  - id: CON-004
+    rule: Tenant-owned data requires validated tenant context and database isolation.
+  - id: CON-005
+    rule: Completion claims require deterministic evidence.
+  - id: CON-006
+    rule: Initial development must run on Windows 11 with WSL2 and Docker Desktop.

@@ -1,0 +1,10 @@
+# Default ownership
+* @DavidFerj
+
+# Security, delivery, persistence, and architecture boundaries
+/.github/ @DavidFerj
+/SECURITY.md @DavidFerj
+/docs/adrs/ @DavidFerj
+/gcp/infrastructure/ @DavidFerj
+/gcp/services/control-plane/migrations/ @DavidFerj
+/specs/ @DavidFerj
