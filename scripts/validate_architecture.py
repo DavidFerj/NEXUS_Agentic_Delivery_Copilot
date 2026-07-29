@@ -12,6 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_PATHS = (
     "LICENSE",
     "NOTICE",
+    ".gcloudignore",
+    ".githooks/pre-commit",
+    ".githooks/pre-push",
     "frontend/package.json",
     "frontend/apphosting.yaml",
     "turbo.json",
@@ -28,10 +31,13 @@ REQUIRED_PATHS = (
     "docs/adrs/0009-external-identity-mapping.md",
     "docs/architecture/data-governance.md",
     "docs/runbooks/cross-store-recovery.md",
+    "docs/runbooks/secret-management.md",
+    "docs/adrs/0010-keyless-github-to-gcp-authentication.md",
     ".github/CODEOWNERS",
     ".github/pull_request_template.md",
     "SECURITY.md",
     "firebase.json",
+    "scripts/validate_repository_hygiene.py",
 )
 FORBIDDEN_LEGACY_DIRECTORIES = ("apps", "packages", "services", "infrastructure")
 
@@ -128,6 +134,8 @@ def main() -> None:
         re.fullmatch(r"[^@]+@[0-9a-f]{40}", reference) is None for reference in action_references
     ):
         raise ValueError("GitHub Actions must use immutable full commit SHAs")
+    if "scripts.validate_repository_hygiene" not in workflow:
+        raise ValueError("CI must enforce the repository hygiene gate")
 
 
 if __name__ == "__main__":

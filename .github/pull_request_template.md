@@ -14,6 +14,11 @@ Describe affected components, contracts, data, modular boundaries, and compatibi
 
 Describe authentication, authorization, IAM, input validation, secrets, and risks.
 
+- [ ] No credentials, private keys, environment files, customer data, or private
+      deployment state are included.
+- [ ] New configuration uses approved examples and managed secret references.
+- [ ] Repository hygiene and security checks were executed successfully.
+
 ## QA and validation
 
 List only commands and checks that were actually executed, with their real results.

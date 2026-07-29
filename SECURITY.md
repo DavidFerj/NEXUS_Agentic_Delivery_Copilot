@@ -23,6 +23,10 @@ coordinated remediation window before disclosure.
 ## Baseline controls
 
 - No production secrets, credentials, personal data, or customer code in this repository.
+- Versioned pre-commit and pre-push hooks reject sensitive paths and high-confidence
+  credential patterns before content reaches GitHub.
+- `.gitignore`, `.dockerignore`, and `.gcloudignore` independently exclude local secrets,
+  provider credentials, Terraform state, deployment state, database exports, and keys.
 - Tenant context comes from validated identity, never from an untrusted request parameter.
 - Firebase Authentication establishes identity; application authorization and tenant
   membership remain control-plane responsibilities.
@@ -34,6 +38,11 @@ coordinated remediation window before disclosure.
 - Pull requests require deterministic tests and security scanning before promotion.
 - Production deployment is never automatic.
 - GitHub Actions dependencies are pinned to immutable commit SHAs.
+- GitHub Actions permits only GitHub-owned actions and an explicit provider allowlist;
+  repository policy also requires full-length SHA pinning.
+- Google Cloud CI/CD uses short-lived Workload Identity Federation. Long-lived
+  service-account JSON keys are prohibited.
 - Confirmed secrets and unwaived critical/high dependency findings block publication.
 
-See `specs/foundation/threat-model.md` for the initial threat analysis.
+See [the secret-management runbook](docs/runbooks/secret-management.md) for prevention
+and response, and `specs/foundation/threat-model.md` for the initial threat analysis.

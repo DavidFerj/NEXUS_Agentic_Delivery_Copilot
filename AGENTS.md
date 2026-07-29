@@ -46,9 +46,10 @@ pnpm build
 uv sync --all-packages --all-extras
 uv run ruff check .
 uv run ruff format --check .
-uv run mypy gcp/services/control-plane/src
+uv run mypy gcp/services/control-plane/src scripts
 uv run pytest
 uv run python scripts/validate_architecture.py
+uv run python -m scripts.validate_repository_hygiene
 pnpm test:firebase
 docker compose up --build
 ```
@@ -67,6 +68,9 @@ On Windows, `scripts/validate.ps1` executes the complete local quality gate.
 - Database changes require an Alembic migration, rollback notes, and isolation tests.
 - Firebase client access is deny-by-default; server SDK access requires least-privilege
   IAM because Admin/server libraries bypass Firestore Security Rules.
+- Repository hooks and CI reject sensitive filenames and high-confidence secret patterns.
+- Google Cloud deployment uses short-lived Workload Identity Federation; service-account
+  key files are prohibited.
 - A new deployable boundary requires independent scaling, security, lifecycle, or
   ownership evidence. Internal modules are not microservices.
 - Never promote automatically to production.

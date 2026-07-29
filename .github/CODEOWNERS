@@ -3,8 +3,17 @@
 
 # Security, delivery, persistence, and architecture boundaries
 /.github/ @DavidFerj
+/.dockerignore @DavidFerj
+/.gcloudignore @DavidFerj
+/.githooks/ @DavidFerj
+/.gitignore @DavidFerj
+/.env.example @DavidFerj
+/.firebaserc.example @DavidFerj
 /SECURITY.md @DavidFerj
 /docs/adrs/ @DavidFerj
+/docs/runbooks/secret-management.md @DavidFerj
 /gcp/infrastructure/ @DavidFerj
 /gcp/services/control-plane/migrations/ @DavidFerj
+/scripts/repository_hygiene.py @DavidFerj
+/scripts/validate_repository_hygiene.py @DavidFerj
 /specs/ @DavidFerj

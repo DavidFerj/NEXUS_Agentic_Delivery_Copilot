@@ -73,10 +73,16 @@ jobs:
       - run: uv sync --frozen --all-packages --all-extras
       - run: uv run ruff format --check .
       - run: uv run ruff check .
-      - run: uv run mypy gcp/services/control-plane/src
+      - run: >-
+          uv run mypy
+          gcp/services/control-plane/src
+          scripts/repository_hygiene.py
+          scripts/validate_repository_hygiene.py
+          scripts/install_repository_hooks.py
       - run: uv run pytest
       - run: uv run python scripts/validate_contracts.py
       - run: uv run python scripts/validate_architecture.py
+      - run: uv run python -m scripts.validate_repository_hygiene
 
   firebase:
     runs-on: ubuntu-latest
@@ -143,6 +149,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - run: python3 -m scripts.validate_repository_hygiene
       - uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4
         if: github.event_name == 'pull_request'
         with:

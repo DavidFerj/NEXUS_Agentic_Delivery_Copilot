@@ -56,20 +56,26 @@ Hosting can resolve the frontend root through its supported monorepo build path.
    uv sync --all-packages --all-extras
    ```
 
-3. Start the Firebase emulators in one terminal:
+3. Install this checkout's versioned security hooks:
+
+   ```text
+   uv run python scripts/install_repository_hooks.py
+   ```
+
+4. Start the Firebase emulators in one terminal:
 
    ```text
    pnpm emulators:firebase
    ```
 
-4. Start the containerized local environment in another terminal:
+5. Start the containerized local environment in another terminal:
 
    ```text
    docker compose up --build
    ```
 
-5. Open the web application at `http://localhost:3000`.
-6. Check the API at `http://localhost:8000/health/live`.
+6. Open the web application at `http://localhost:3000`.
+7. Check the API at `http://localhost:8000/health/live`.
 
 The API refuses development-header authentication in staging or production. No default
 credential is valid outside a local environment.
@@ -90,6 +96,8 @@ Portable commands are documented in [AGENTS.md](AGENTS.md). The detailed test st
 security model, and requirement-to-test mapping live under `specs/foundation/`.
 
 Security vulnerabilities must be reported privately according to [SECURITY.md](SECURITY.md).
+Credential handling and leak response are defined in the
+[secret-management runbook](docs/runbooks/secret-management.md).
 Cross-store reliability and data handling are defined in
 [ADR-0008](docs/adrs/0008-reliable-cross-store-events.md) and
 [data governance](docs/architecture/data-governance.md).

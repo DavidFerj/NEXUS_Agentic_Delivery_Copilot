@@ -8,12 +8,19 @@ the right to submit it, and that it is provided under the repository's
 
 ## Workflow
 
-1. Start from the current local `develop` state unless the approved task specifies a
+1. Install the repository security hooks with
+   `uv run python scripts/install_repository_hooks.py`.
+2. Start from the current local `develop` state unless the approved task specifies a
    different baseline.
-2. Create one short-lived branch for one independent outcome.
-3. Link the change to a requirement or acceptance-criterion identifier.
-4. Update contracts, migrations, tests, and documentation together.
-5. Run `scripts/validate.ps1` before requesting review.
+3. Create one short-lived branch for one independent outcome.
+4. Link the change to a requirement or acceptance-criterion identifier.
+5. Update contracts, migrations, tests, and documentation together.
+6. Run `scripts/validate.ps1` before requesting review.
+
+Do not commit credentials, private keys, environment files, Terraform state, database
+exports, customer data, or private deployment configuration. Do not bypass a security
+hook with `--no-verify`; report a suspected false positive for explicit review. Follow
+the [secret-management runbook](docs/runbooks/secret-management.md).
 
 ## Pull requests
 

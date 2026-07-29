@@ -13,8 +13,8 @@ select = ["E", "F", "I", "B", "C4", "UP", "SIM", "RUF"]
 "gcp/services/control-plane/migrations/versions/*.py" = ["E501"]
 
 [tool.pytest.ini_options]
-addopts = "--strict-config --strict-markers --cov=nexus_api --cov-branch --cov-report=term-missing --cov-fail-under=100"
-testpaths = ["gcp/services/control-plane/tests"]
+addopts = "--strict-config --strict-markers --cov=nexus_api --cov=scripts.repository_hygiene --cov-branch --cov-report=term-missing --cov-fail-under=100"
+testpaths = ["gcp/services/control-plane/tests", "scripts/tests"]
 
 [tool.coverage.run]
 branch = true

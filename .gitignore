@@ -1,7 +1,37 @@
-# Environment and secrets
+# Environment files
 .env
 .env.*
 !.env.example
+!.env.*.example
+*.env
+*.env.*
+!*.env.example
+!*.env.*.example
+
+# Credentials, private keys, and local secret stores
+.secrets/
+secrets/
+credentials/
+.ssh/
+*.pem
+*.key
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.kdbx
+id_rsa
+id_ecdsa
+id_ed25519
+application_default_credentials.json
+credentials.json
+service-account*.json
+service_account*.json
+*-firebase-adminsdk-*.json
+firebase-adminsdk*.json
+client_secret*.json
+oauth-client*.json
 
 # Python
 __pycache__/
@@ -36,13 +66,45 @@ Thumbs.db
 .local/
 .codex/
 logs/
+*.log
+*.dump
+*.backup
+*.sqlite
+*.sqlite3
+*.db
+*.db-*
 
-# Firebase local state
+# Google Cloud, Firebase, and deployment tooling
+.gcloud/
 .firebase/
 .firebaserc
+.runtimeconfig.json
 firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
 apphosting.local.yaml
 gcp/firebase/.emulator-data/
+firebase-export-*/
+.vercel/
+.netlify/
+.serverless/
+.wrangler/
+
+# Infrastructure-as-code state and private variable values
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*.tfplan
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
+
+# Kubernetes credentials and local contexts
+.kube/
+kubeconfig
+kubeconfig.*
+!kubeconfig.example
 
