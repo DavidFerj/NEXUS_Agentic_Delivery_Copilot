@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "firebase-tools": "15.24.0",
-    "prettier": "3.6.2",
-    "turbo": "2.10.7"
+    "prettier": "3.9.6",
+    "turbo": "2.10.10"
   }
 }
